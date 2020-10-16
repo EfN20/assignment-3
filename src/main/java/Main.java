@@ -13,7 +13,9 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws SQLException {
         IUserRepository userRepo = new UserRepository();
-        User user = userRepo.getUserByUsername("Azatkali");
-        System.out.println(user.getUsername());
+        User loginUser = new User("Azatkali", "123456");
+        User user = userRepo.findUserByLogin(loginUser);
+//        User user = userRepo.getUserByUsername("Azatkali");
+        System.out.println(user.getUsername() + " | " + user.getPassword());
     }
 }

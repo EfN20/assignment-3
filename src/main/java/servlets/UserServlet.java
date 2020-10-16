@@ -1,6 +1,8 @@
 package servlets;
 
 import domain.User;
+import repositories.UserRepository;
+import repositories.interfaces.IUserRepository;
 import services.UserService;
 import services.interfaces.IUserService;
 
@@ -15,15 +17,17 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "UserServlet")
 public class UserServlet extends HttpServlet {
-    private IUserService userServ = new UserService();
+//    private IUserService userServ = new UserService();
 
+    private IUserRepository userRepo = new UserRepository();
     //FOR LOGIN ALREADY EXIST USER
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("usernameLog");
         String password = request.getParameter("passwordLog");
         if(username != null && password != null){
             User signedUser = new User(username, password);
-            userServ.findUserByLogin(signedUser);
+//            userServ.findUserByLogin(signedUser);
+            userRepo.findUserByLogin(signedUser);
             HttpSession session = request.getSession();
             session.setAttribute("signedUser", signedUser);
             request.getRequestDispatcher("items").forward(request, response);
@@ -42,7 +46,8 @@ public class UserServlet extends HttpServlet {
         String password = request.getParameter("password");
         if(username != null && password != null){
             User signedUser = new User(username, password);
-            userServ.add(signedUser);
+//            userServ.add(signedUser);
+            userRepo.findUserByLogin(signedUser);
             HttpSession session = request.getSession();
             session.setAttribute("signedUser", signedUser);
             request.getRequestDispatcher("items").forward(request, response);
@@ -54,4 +59,5 @@ public class UserServlet extends HttpServlet {
             pw.close();
         }
     }
+
 }

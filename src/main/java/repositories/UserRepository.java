@@ -1,21 +1,22 @@
 package repositories;
 
 import domain.User;
+import repositories.interfaces.IDBRepository;
 import repositories.interfaces.IUserRepository;
 
 import java.sql.*;
 
 public class UserRepository implements IUserRepository {
-//    private IDBRepository dbrepo = new PostgresRepository();
-    static Connection dbrepo = PostgresRepository.getConnection();
+    private IDBRepository dbrepo = new PostgresRepository();
+//    static Connection dbrepo = PostgresRepository.getConnection();
 
     @Override
     public void add(User entity) {
         try{
             String sql = "insert into users(username, password) " +
                     "values(?, ?)";
-//            PreparedStatement stmt = dbrepo.getConnection().prepareStatement(sql);
-            PreparedStatement stmt = dbrepo.prepareStatement(sql);
+            PreparedStatement stmt = dbrepo.getConnection().prepareStatement(sql);
+//            PreparedStatement stmt = dbrepo.prepareStatement(sql);
             stmt.setString(1, entity.getUsername());
             stmt.setString(2, entity.getPassword());
             stmt.execute();
@@ -40,8 +41,8 @@ public class UserRepository implements IUserRepository {
 
         try{
             int i = 1;
-//            PreparedStatement stmt = dbrepo.getConnection().prepareStatement(sql);
-            PreparedStatement stmt = dbrepo.prepareStatement(sql);
+            PreparedStatement stmt = dbrepo.getConnection().prepareStatement(sql);
+//            PreparedStatement stmt = dbrepo.prepareStatement(sql);
             if(entity.getPassword() != null){
                 stmt.setString(i++, entity.getPassword());
             }
@@ -60,8 +61,8 @@ public class UserRepository implements IUserRepository {
     public void remove(User entity) {
         String sql = "Delete from users where id = " + entity.getId();
         try {
-//            PreparedStatement stmt = dbrepo.getConnection().prepareStatement(sql);
-            PreparedStatement stmt = dbrepo.prepareStatement(sql);
+            PreparedStatement stmt = dbrepo.getConnection().prepareStatement(sql);
+//            PreparedStatement stmt = dbrepo.prepareStatement(sql);
             stmt.execute();
         } catch (SQLException ex){
 //            throw new BadRequestException("Cannot run SQL statement: " + ex.getMessage());
@@ -72,8 +73,8 @@ public class UserRepository implements IUserRepository {
     @Override
     public User queryOne(String sql) {
         try {
-//            Statement stmt = dbrepo.getConnection().createStatement();
-            Statement stmt = dbrepo.createStatement();
+            Statement stmt = dbrepo.getConnection().createStatement();
+//            Statement stmt = dbrepo.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 return new User(
