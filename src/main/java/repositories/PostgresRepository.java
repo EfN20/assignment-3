@@ -1,10 +1,6 @@
 package repositories;
 
 
-import repositories.interfaces.IDBRepository;
-
-import javax.ws.rs.ServerErrorException;
-import javax.ws.rs.core.Response;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

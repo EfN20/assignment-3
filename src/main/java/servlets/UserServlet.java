@@ -1,7 +1,6 @@
 package servlets;
 
 import domain.User;
-import repositories.PostgresRepository;
 import services.UserService;
 import services.interfaces.IUserService;
 
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
 
 @WebServlet(name = "UserServlet")
 public class UserServlet extends HttpServlet {

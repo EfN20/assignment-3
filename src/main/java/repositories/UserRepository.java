@@ -1,10 +1,8 @@
 package repositories;
 
 import domain.User;
-import repositories.interfaces.IDBRepository;
 import repositories.interfaces.IUserRepository;
 
-import javax.ws.rs.BadRequestException;
 import java.sql.*;
 
 public class UserRepository implements IUserRepository {
