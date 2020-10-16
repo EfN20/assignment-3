@@ -9,7 +9,7 @@ import java.sql.*;
 
 public class UserRepository implements IUserRepository {
 //    private IDBRepository dbrepo = new PostgresRepository();
-//    Connection dbrepo = PostgresRepository.getConnection();
+    static Connection dbrepo = PostgresRepository.getConnection();
 
     @Override
     public void add(User entity) {
@@ -17,12 +17,13 @@ public class UserRepository implements IUserRepository {
             String sql = "insert into users(username, password) " +
                     "values(?, ?)";
 //            PreparedStatement stmt = dbrepo.getConnection().prepareStatement(sql);
-            PreparedStatement stmt = PostgresRepository.getConnection().prepareStatement(sql);
+            PreparedStatement stmt = dbrepo.prepareStatement(sql);
             stmt.setString(1, entity.getUsername());
             stmt.setString(2, entity.getPassword());
             stmt.execute();
         } catch (SQLException ex){
-            throw new BadRequestException("Cannot run SQL statement: " + ex.getMessage());
+//            throw new BadRequestException("Cannot run SQL statement: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
@@ -42,7 +43,7 @@ public class UserRepository implements IUserRepository {
         try{
             int i = 1;
 //            PreparedStatement stmt = dbrepo.getConnection().prepareStatement(sql);
-            PreparedStatement stmt = PostgresRepository.getConnection().prepareStatement(sql);
+            PreparedStatement stmt = dbrepo.prepareStatement(sql);
             if(entity.getPassword() != null){
                 stmt.setString(i++, entity.getPassword());
             }
@@ -52,7 +53,8 @@ public class UserRepository implements IUserRepository {
             stmt.setString(i++, String.valueOf(entity.getId()));
 
         } catch (SQLException ex){
-            throw new BadRequestException("Cannot run SQL statement: " + ex.getMessage());
+//            throw new BadRequestException("Cannot run SQL statement: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
@@ -61,10 +63,11 @@ public class UserRepository implements IUserRepository {
         String sql = "Delete from users where id = " + entity.getId();
         try {
 //            PreparedStatement stmt = dbrepo.getConnection().prepareStatement(sql);
-            PreparedStatement stmt = PostgresRepository.getConnection().prepareStatement(sql);
+            PreparedStatement stmt = dbrepo.prepareStatement(sql);
             stmt.execute();
         } catch (SQLException ex){
-            throw new BadRequestException("Cannot run SQL statement: " + ex.getMessage());
+//            throw new BadRequestException("Cannot run SQL statement: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
@@ -72,7 +75,7 @@ public class UserRepository implements IUserRepository {
     public User queryOne(String sql) {
         try {
 //            Statement stmt = dbrepo.getConnection().createStatement();
-            Statement stmt = PostgresRepository.getConnection().createStatement();
+            Statement stmt = dbrepo.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 return new User(
@@ -82,7 +85,8 @@ public class UserRepository implements IUserRepository {
                 );
             }
         } catch (SQLException ex) {
-            throw new BadRequestException("Cannot run SQL statement: " + ex.getMessage());
+//            throw new BadRequestException("Cannot run SQL statement: " + ex.getMessage());
+            ex.printStackTrace();
         }
         return null;
     }
