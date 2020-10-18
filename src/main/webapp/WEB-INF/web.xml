@@ -30,4 +30,22 @@
         <servlet-name>Register</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddToCart</servlet-name>
+        <servlet-class>servlets.AddToCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddToCart</servlet-name>
+        <url-pattern>/addCart</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Categorize</servlet-name>
+        <servlet-class>servlets.CategoryItemServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Categorize</servlet-name>
+        <url-pattern>/categorize</url-pattern>
+    </servlet-mapping>
 </web-app>

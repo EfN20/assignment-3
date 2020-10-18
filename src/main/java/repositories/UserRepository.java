@@ -50,6 +50,7 @@ public class UserRepository implements IUserRepository {
                 stmt.setString(i++, entity.getUsername());
             }
             stmt.setString(i++, String.valueOf(entity.getId()));
+            stmt.execute();
 
         } catch (SQLException ex){
 //            throw new BadRequestException("Cannot run SQL statement: " + ex.getMessage());

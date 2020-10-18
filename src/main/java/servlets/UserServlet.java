@@ -1,9 +1,12 @@
 package servlets;
 
+import domain.Item;
 import domain.User;
 import repositories.UserRepository;
 import repositories.interfaces.IUserRepository;
+import services.ItemService;
 import services.UserService;
+import services.interfaces.IItemService;
 import services.interfaces.IUserService;
 
 import javax.servlet.ServletException;
@@ -14,22 +17,32 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
+import java.util.Set;
 
 @WebServlet(name = "UserServlet")
 public class UserServlet extends HttpServlet {
-//    private IUserService userServ = new UserService();
+    private IUserService userServ = new UserService();
+    private IItemService itemService = new ItemService();
 
-    private IUserRepository userRepo = new UserRepository();
     //FOR LOGIN ALREADY EXIST USER
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("usernameLog");
         String password = request.getParameter("passwordLog");
         if(username != null && password != null){
             User signedUser = new User(username, password);
-//            userServ.findUserByLogin(signedUser);
-            userRepo.findUserByLogin(signedUser);
+            userServ.findUserByLogin(signedUser);
             HttpSession session = request.getSession();
             session.setAttribute("signedUser", signedUser);
+            //taking from DB items and sending to jsp
+            Set<Item> items = itemService.getAllItems();
+            request.setAttribute("items", items);
+            //
+
+            //taking from DB categories and sending to jsp
+            Map<Integer, String> ct = itemService.getCategoriesOfItems();
+            request.setAttribute("categories", ct);
+            //
             request.getRequestDispatcher("items").forward(request, response);
         }
         else{
@@ -46,10 +59,11 @@ public class UserServlet extends HttpServlet {
         String password = request.getParameter("password");
         if(username != null && password != null){
             User signedUser = new User(username, password);
-//            userServ.add(signedUser);
-            userRepo.findUserByLogin(signedUser);
+            userServ.add(signedUser);
             HttpSession session = request.getSession();
             session.setAttribute("signedUser", signedUser);
+            Set<Item> items = itemService.getAllItems();
+            request.setAttribute("items", items);
             request.getRequestDispatcher("items").forward(request, response);
         }
         else{

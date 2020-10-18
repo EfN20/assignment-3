@@ -2,7 +2,6 @@ package domain;
 
 public class User {
     private int id;
-    private static int id_gen = 1;
     private String username;
     private String password;
 
@@ -28,10 +27,6 @@ public class User {
 
     public void setId(int id){
         this.id = id;
-    }
-
-    public void generateId(){
-        this.id = id_gen++;
     }
 
     public String getUsername() {
