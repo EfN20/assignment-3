@@ -48,4 +48,31 @@
         <servlet-name>Categorize</servlet-name>
         <url-pattern>/categorize</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Pay</servlet-name>
+        <servlet-class>servlets.PayServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Pay</servlet-name>
+        <url-pattern>/pay</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ConfirmationPage</servlet-name>
+        <jsp-file>/jsp/confirmationPage.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ConfirmationPage</servlet-name>
+        <url-pattern>/confirm-info</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Confirm</servlet-name>
+        <servlet-class>servlets.ConfirmServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Confirm</servlet-name>
+        <url-pattern>/confirm</url-pattern>
+    </servlet-mapping>
 </web-app>

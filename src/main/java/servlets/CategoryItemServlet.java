@@ -19,13 +19,16 @@ import java.util.Set;
 public class CategoryItemServlet extends HttpServlet {
     private IItemService itemService = new ItemService();
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String category = request.getParameter("cate");
         HttpSession session = request.getSession();
+
+        //counter increase
+        int counter = (int) session.getAttribute("counter");
+        counter++;
+        session.setAttribute("counter", counter);
+        //
+
         if(category.equals("all")){
             //taking from DB items and sending to jsp
             Set<Item> items = itemService.getAllItems();

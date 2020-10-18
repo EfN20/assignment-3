@@ -2,13 +2,12 @@ package servlets;
 
 import domain.Item;
 import domain.User;
-import repositories.UserRepository;
-import repositories.interfaces.IUserRepository;
 import services.ItemService;
 import services.UserService;
 import services.interfaces.IItemService;
 import services.interfaces.IUserService;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +23,12 @@ import java.util.Set;
 public class UserServlet extends HttpServlet {
     private IUserService userServ = new UserService();
     private IItemService itemService = new ItemService();
+    private int counter;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        counter = 1;
+    }
 
     //FOR LOGIN ALREADY EXIST USER
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,6 +39,7 @@ public class UserServlet extends HttpServlet {
             userServ.findUserByLogin(signedUser);
             HttpSession session = request.getSession();
             session.setAttribute("signedUser", signedUser);
+            session.setAttribute("counter", counter);
             //taking from DB items and sending to jsp
             Set<Item> items = itemService.getAllItems();
             request.setAttribute("items", items);
@@ -62,8 +68,16 @@ public class UserServlet extends HttpServlet {
             userServ.add(signedUser);
             HttpSession session = request.getSession();
             session.setAttribute("signedUser", signedUser);
+            session.setAttribute("counter", counter);
+            //taking from DB items and sending to jsp
             Set<Item> items = itemService.getAllItems();
             request.setAttribute("items", items);
+            //
+
+            //taking from DB categories and sending to jsp
+            Map<Integer, String> ct = itemService.getCategoriesOfItems();
+            request.setAttribute("categories", ct);
+            //
             request.getRequestDispatcher("items").forward(request, response);
         }
         else{
