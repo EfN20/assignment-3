@@ -1,4 +1,4 @@
-<%--
+<%@ page import="domain.User" %><%--
   Created by IntelliJ IDEA.
   User: Berikkali
   Date: 16.10.2020
@@ -40,3 +40,12 @@
     <%@include file="footer.jsp"%>
 </body>
 </html>
+
+<%-- TEST IF LOGOUT WORK AND SESSION WAS DESTROYED --%>
+<%
+    if(session.getAttribute("signedUser") != null){
+        User user = (User) session.getAttribute("signedUser");
+        System.out.println(user.getUsername() + "!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
+%>
+<%-- TEST IF LOGOUT WORK AND SESSION WAS DESTROYED --%>

@@ -1,4 +1,4 @@
-<%@ page import="domain.User" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: Berikkali
   Date: 16.10.2020
@@ -15,7 +15,10 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="mx-auto text-center" style="width: auto">Welcome, <c:out value="${signedUser.username}" /></h1>
+        <div class="d-flex justify-content-center">
+            <h1 style="width: auto">Welcome, <c:out value="${signedUser.username}" /></h1>
+            <a class="btn btn-dark btn-sm" href="logout" role="button">Log out</a>
+        </div>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Dropdown button
@@ -42,7 +45,7 @@
             </div>
         </c:forEach>
 
-        <form method="post" action="pay">
+        <form method="get" action="pay">
             <input class="btn btn-dark" type="submit" value="Pay">
         </form>
 

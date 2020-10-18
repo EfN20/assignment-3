@@ -8,15 +8,13 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @WebServlet(name = "PayServlet")
 public class PayServlet extends HttpServlet {
     private IItemService itemService = new ItemService();
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         List<Item> selectedItems = new LinkedList<>();
         Cookie[] cookies = request.getCookies();
@@ -28,6 +26,7 @@ public class PayServlet extends HttpServlet {
                 selectedItems.add(item);
             }
         }
+
         int sessionCount = (int) session.getAttribute("counter"); //counter of visit
         Date sessionCreation = new Date(session.getCreationTime()); //creation time of session
         Date sessionLast = new Date(session.getLastAccessedTime()); //last access time of session
@@ -55,4 +54,5 @@ public class PayServlet extends HttpServlet {
     private interface Summary{
         int summary(int total, int price);
     }
+
 }
