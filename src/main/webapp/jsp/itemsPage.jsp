@@ -22,10 +22,10 @@
                 Dropdown button
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="categorize?cate=all"/>All</a>
                 <c:forEach var="ct" items="${categories}">
                     <a class="dropdown-item" href="categorize?cate=<c:out value="${ct.value}"/>"><c:out value="${ct.value}"/></a>
                 </c:forEach>
-                <a class="dropdown-item" href="categorize?cate=all"/>">All</a>
             </div>
         </div>
 
@@ -35,13 +35,18 @@
                 <div class="card-body">
                     <h5 class="card-title"><c:out value="${item.category}"/></h5>
                     <p class="card-text"><c:out value="${item.price}"/> tg</p>
-                    <form method="" action="">
+                    <form method="post" action="addCart">
                         <input class="btn btn-dark" type="submit" value="Add to cart">
-                        <input hidden value="<c:out value="${item.id}"/>">
+                        <input hidden name="itemId" value="<c:out value="${item.id}"/>">
                     </form>
                 </div>
             </div>
         </c:forEach>
+
+        <form method="" action="">
+            <input class="btn btn-dark" type="submit" value="Pay">
+        </form>
+
     </div>
 </body>
 </html>
